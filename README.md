@@ -1,6 +1,4 @@
-# Flappy Bird AI  
-
-## Description  
+# Flappy Bird AI   
 This repository contains a course project focused on training an AI agent to play Flappy Bird using reinforcement learning. The agent leverages the **Deep Q-Learning (DQN)** algorithm to optimize its gameplay. The project is implemented using common Python libraries such as **PyTorch** for machine learning and **Pygame** for creating the game environment.  
 
 ---
