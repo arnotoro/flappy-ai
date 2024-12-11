@@ -4,7 +4,7 @@ from graphviz import Digraph
 dqn_diagram = Digraph('DQN Architecture', filename='dqn_architecture_diagram', format='png')
 
 # Set the graph layout to be top-to-bottom (TB) for better compactness
-dqn_diagram.attr(rankdir='TB')
+dqn_diagram.attr(rankdir='LR')
 
 dqn_diagram.attr('node', shape='rect')
 
