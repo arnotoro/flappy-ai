@@ -28,7 +28,7 @@ The Deep Q-Learning (DQN) algorithm enables the AI agent to make decisions by ap
 
 --- 
 
-## Getting Started
+## Installation
 Tested on Python 3.11.8
 1. Clone this repository:  
    ```bash  
