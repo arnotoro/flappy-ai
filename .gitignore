@@ -1,0 +1,10 @@
+# Python environment
+.flappy_env
+__pycache__
+
+# Video files
+*.mp4
+./videos
+
+# Other
+*.zip
