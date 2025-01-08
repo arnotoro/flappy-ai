@@ -21,7 +21,7 @@ class Bird:
         self.pos = self.image.get_rect() # Position # left,top, width, height
 
         #Set position of bird
-        self.pos[0] = round(SCREEN_WIDHT / 6 / GAME_SPEED) * GAME_SPEED #ensure divisible trough GAME_SPEED -> used for score function
+        self.pos[0] = round(SCREEN_WIDHT / 6 / GAME_SPEED) * GAME_SPEED
         self.pos[1] = SCREEN_HEIGHT / 2
 
     def update(self):
@@ -59,7 +59,6 @@ class Pipe:
 
     def update(self):
         self.pos[0] -= GAME_SPEED
-        # if pos kleiner 1 delete itself
 
     def draw(self, screen):
         screen.blit(self.image, self.pos)

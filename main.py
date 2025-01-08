@@ -12,7 +12,7 @@ hyperparameter = {
 } 
 
 # Decide whether the agent is trained or the human is playing
-mode = "train"  # Set this to "train" to train the agent, or "play" for human play
+mode = "test"  # Set this to "train" to train the agent, or "play" for human play
 
 # Training the agent
 if mode == "train":
@@ -41,9 +41,9 @@ if mode =="test":
     model_file = f"model_files/fb_250.pth"  # Using f-str ing for formatting
  
     g = game.Game("loaded_agent", "cpu", model_file)
-    score = g.main(draw=True)
-    print("Score: ", score)
+    # score = g.main(draw=True)
+    # print("Score: ", score)
 
-    # while True:
-    #     score = g.main(draw=True)
-    #     print("Score: ", score)
+    while True:
+        score = g.main(draw=True)
+        print("Score: ", score)
