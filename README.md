@@ -7,7 +7,7 @@ The project is implemented with Python using common libraries such as **PyTorch*
 In this project, the AI agent was trained using the *Deep Q-Learning (DQN)* algorithm. The DQN algorithm combines Q-learning with deep neural networks to approximate the Q-value function. This allows the agent to estimate expected future rewards for different actions in a given state. More on this topic in the `reserach` folder.
 
 **DQN architecture:**
-![DQN Architecture](./presentation/dqn_architecture_diagram.png) 
+![DQN Architecture](./research/case_study/dqn_architecture_diagram.png) 
 
 ---
 
