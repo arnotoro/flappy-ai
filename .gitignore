@@ -2,9 +2,13 @@
 .flappy_env
 __pycache__
 
-# Video files
+# Files generated for research
 *.mp4
-./videos
+/*.png
+/assets/*/
+
 
 # Other
 *.zip
+*.egg-info
+*.egg

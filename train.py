@@ -1,4 +1,4 @@
-import game
+import environment.game as game
 import numpy as np
 
 def train():

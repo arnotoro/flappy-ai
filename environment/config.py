@@ -1,7 +1,3 @@
-"""
-Game constants
-"""
-
 #Pygame window
 SCREEN_WIDHT = 400
 SCREEN_HEIGHT = 600

@@ -1,8 +1,8 @@
-from config import *
 import pygame
 from pygame.locals import *
 
-
+# Local imports
+from environment.config import *
 
 """
 Class controlling gameobject Bird

@@ -1,15 +1,18 @@
-from config import *
-import objects
+
 import pygame
 from pygame.locals import *
 import random
 import sys
 import time
 import torch
-import agents.user_agent, agents.random_agent, agents.dqn_agent, agents.loaded_agent
 import numpy as np
 import vidmaker
 import matplotlib.pyplot as plt
+
+# Local imports
+from environment.config import *
+from environment.objects import Pipe, Bird, Ground
+from agents import user_agent, random_agent, dqn_agent, loaded_agent
 
 #Agents
 AGENTS = ["user_agent", "random_agent", "dqn_agent", "loaded_agent"]
@@ -37,20 +40,20 @@ class Game:
         if not agent_name in AGENTS: sys.exit("Agent not defined")
         if device != "cpu" and device != "cuda": sys.exit("Computing device not available")
         if agent_name == "user_agent": 
-            self.agent = agents.user_agent.User_agent()
+            self.agent = user_agent.User_agent()
             print("Initialize game with: User_agent")
         if agent_name == "random_agent": 
-            self.agent = agents.random_agent.Random_agent()
+            self.agent = random_agent.Random_agent()
             print("Initialize game with: Random_agent")
         if agent_name == "dqn_agent": 
-            self.agent = agents.dqn_agent.DQN_agent(device)
+            self.agent = dqn_agent.DQN_agent(device)
             print("Initialize game with: DQN_agent")
             print("Trainable parameters: {}".format(sum(p.numel() for p in vars(self.agent)["model"].parameters())))
         if agent_name == "loaded_agent":
-            self.agent = agents.loaded_agent.Loaded_agent(device, trained_model_path=model_path)
+            self.agent = loaded_agent.Loaded_agent(device, trained_model_path=model_path)
             print("Initialize game with: Loaded_agent")
             print("Trained parameters: {}".format(sum(p.numel() for p in vars(self.agent)["model"].parameters())))
-        self.device = device
+        self.device = device if device == "cuda" else "cpu"
 
         #Game objects (Get initialized new every game played)
         self.bird = None
@@ -73,8 +76,8 @@ class Game:
     def init_game(self):
 
         #Initialize game objects
-        self.bird = objects.Bird(bird_image)
-        self.ground = objects.Ground(ground_image, 0)
+        self.bird = Bird(bird_image)
+        self.ground = Ground(ground_image, 0)
         self.pipes = []
         self.score = 0
         self.turn = 0
@@ -86,8 +89,8 @@ class Game:
             ysize = random.randint(200, 300)
 
             #Append pipes to list
-            self.pipes.append(objects.Pipe(pipe_image, False, xpos, ysize))
-            self.pipes.append(objects.Pipe(pipe_image, True, xpos, SCREEN_HEIGHT - ysize - PIPE_GAP))
+            self.pipes.append(Pipe(pipe_image, False, xpos, ysize))
+            self.pipes.append(Pipe(pipe_image, True, xpos, SCREEN_HEIGHT - ysize - PIPE_GAP))
 
     def pipe_handling(self):
         #if pipes out of screen add new ones and remove old
@@ -104,8 +107,8 @@ class Game:
             ysize = random.randint(150, 350)
 
             #Append new pipes
-            self.pipes.append(objects.Pipe(pipe_image, False, xpos, ysize))
-            self.pipes.append(objects.Pipe(pipe_image, True, xpos, SCREEN_HEIGHT - ysize - PIPE_GAP))
+            self.pipes.append(Pipe(pipe_image, False, xpos, ysize))
+            self.pipes.append(Pipe(pipe_image, True, xpos, SCREEN_HEIGHT - ysize - PIPE_GAP))
                 
     def collision(self):
         #Check ground and roof collision
@@ -157,7 +160,7 @@ class Game:
             pygame.display.set_caption('Flappy Bird')
             clock = pygame.time.Clock()
             if self.train:
-                video = vidmaker.Video(f'videos/flappy_bird_{self.episode_N}_{time.strftime("%Y%m%d-%H%M")}.mp4', late_export=True)
+                video = vidmaker.Video(f'assets/videos/flappy_bird_{self.episode_N}_{time.strftime("%Y%m%d-%H%M")}.mp4', late_export=True)
 
             # Set up font for score display
             font = pygame.font.Font(pygame.font.match_font('Comic Sans MS'), 30)
@@ -167,7 +170,7 @@ class Game:
         self.init_game()
 
         # Handle waiting for the user to press SPACE to start
-        if isinstance(self.agent, agents.user_agent.User_agent):
+        if isinstance(self.agent, user_agent.User_agent):
             waiting_for_input = True
             while waiting_for_input:
                 # Display "Press SPACE to start" message
@@ -203,7 +206,7 @@ class Game:
                 screen.blit(BACKGROUND, (0, 0))
 
                 # Check for closing game window
-                if not isinstance(self.agent, agents.user_agent.User_agent):
+                if not isinstance(self.agent, user_agent.User_agent):
                     for event in pygame.event.get():
                         if event.type == QUIT:
                             active_episode = False
@@ -304,7 +307,7 @@ class Game:
             print("Using {} device".format(self.device))
         print("Used training hyperparameters: ", hyperparameter)
 
-        if not isinstance(self.agent, agents.dqn_agent.DQN_agent):
+        if not isinstance(self.agent, dqn_agent.DQN_agent):
             sys.exit("Agent is not trainable")
 
         self.train = True
@@ -411,5 +414,3 @@ class Game:
         plt.tight_layout()
         plt.savefig(f'performance_{time.strftime("%Y%m%d-%H%M%S")}.png')
         plt.show()
-
-
